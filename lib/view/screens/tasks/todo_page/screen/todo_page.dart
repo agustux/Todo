@@ -464,20 +464,50 @@ class _TodoPageState extends State<TodoPage> {
                                                                 .only(
                                                                     right:
                                                                         10)),
-                                                        tasks.items[index]
-                                                                    .status ==
-                                                                1
-                                                            ? const Icon(
-                                                                Icons.check,
-                                                                color: Colors
-                                                                    .green,
-                                                              )
-                                                            : const Icon(
-                                                                Icons
+                                                        IconButton(
+                                                          padding:
+                                                              EdgeInsets.zero,
+                                                          constraints:
+                                                              const BoxConstraints(),
+                                                          icon: Icon(
+                                                            tasks.items[index]
+                                                                        .status ==
+                                                                    1
+                                                                ? Icons.check
+                                                                : Icons
                                                                     .check_outlined,
-                                                                color: Colors
-                                                                    .grey,
-                                                              ),
+                                                            color: tasks
+                                                                        .items[
+                                                                            index]
+                                                                        .status ==
+                                                                    1
+                                                                ? Colors.green
+                                                                : Colors.grey,
+                                                          ),
+                                                          onPressed: () {
+                                                            tasks
+                                                                .markAsDone(
+                                                                    index, user)
+                                                                .then((result) {
+                                                              if (result
+                                                                  is Success) {
+                                                                FeedbackToast
+                                                                    .success(result
+                                                                        .message);
+                                                              } else if (result
+                                                                  is Failure) {
+                                                                FeedbackToast
+                                                                    .error(result
+                                                                        .message);
+                                                              } else if (result
+                                                                  is Info) {
+                                                                FeedbackToast
+                                                                    .info(result
+                                                                        .message);
+                                                              }
+                                                            });
+                                                          },
+                                                        ),
                                                       ],
                                                     ),
                                                     tasks.items[index].desc
